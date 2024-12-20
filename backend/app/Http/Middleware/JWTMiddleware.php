@@ -44,7 +44,7 @@ class JWTMiddleware
             $request->$user = $user;
 
             $response = $next($request);
-            $response->withCookie('jwt_token', $new, 15, '/', null, true, true);
+            $response->withCookie(cookie('jwt_token', $new, 60, '/', null, true, true));
 
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
@@ -53,7 +53,7 @@ class JWTMiddleware
                 return response()->json(['message' => 'Token invalid'], 401);
             } else {
                 return response()->json(['message' => 'Token error: ' . $e->getMessage()], 401)
-                    ->withCookie('jwt_token', $token, 15, '/', null, true, true);
+                    ->withCookie(cookie('jwt_token', $token, 60, '/', null, true, true));
             }
         }
 

@@ -28,14 +28,14 @@ class UserService
             ->json([
 //            'access_token' => $token,
 //            'token_type' => 'bearer',
-//            'expires_in' =>  60 * 15
-        ])->withCookie(cookie('jwt_token', $token, 15, '/', null, true, true));
+//            'expires_in' =>  60 * 60
+        ])->withCookie(cookie('jwt_token', $token, 60, '/', null, true, true));
     }
 
     public function refreshToken()
     {
         $old = JWTAuth::getToken();
-        JWTAuth::factory()->setTTL(15);
+        JWTAuth::factory()->setTTL(60);
         $new = JWTAuth::refresh();
         JWTAuth::invalidate($old);
         return $this->respondWithToken(token: $new);
@@ -43,7 +43,7 @@ class UserService
 
     public function login($email, $password){
 
-        JWTAuth::factory()->setTTL(15);
+        JWTAuth::factory()->setTTL(60);
         $credentials = JWTAuth::attempt(["email"=> $email,"password"=> $password]);
 
         if($credentials){
@@ -69,7 +69,7 @@ class UserService
 
         JWTAuth::setToken($token)->invalidate(true);
 
-        return response()->json(null, 200)->withCookie(cookie('jwt_token', '', 15, '/', null, true, true));
+        return response()->json(null, 200)->withCookie(cookie('jwt_token', '', 60, '/', null, true, true));
     }
 
     public function forgotPassword($email){

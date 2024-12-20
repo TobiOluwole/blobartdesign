@@ -16,7 +16,7 @@ AxiosInstance.interceptors.request.use(
         config.headers["Content-Type"] = 'application/json';
         config.headers.Accept = 'application/json';
 
-        config.withCfingerpriredentials = true;
+        config.withCredentials = true;
 
         // If token is present, add it to request's Authorization Header
         // if (jwtToken) {
@@ -24,7 +24,17 @@ AxiosInstance.interceptors.request.use(
         // }
 
         return config;
-    }
+    },
 );
+
+AxiosInstance.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (error) => {
+        console.log('errrrrrrrrrrrrrr', error.statusCode);
+        return error
+    }
+)
 
 export default AxiosInstance

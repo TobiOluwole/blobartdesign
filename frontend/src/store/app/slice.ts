@@ -2,10 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface IAppState {
     loading: boolean;
+    pages: {
+        id: number;
+        url: string;
+        display_name: string;
+        page_id: number,
+        is_home: number,
+    }[];
 }
 
 export const initialState: IAppState = {
-    loading: false
+    loading: false,
+    pages: []
 };
 
 export const appSlice = createSlice({

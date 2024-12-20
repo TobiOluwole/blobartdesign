@@ -1,11 +1,14 @@
 import {toast} from "react-hot-toast";
 import axios from "@/utils/axiosInstance";
 import {setLoadingState} from "@/store/app/actions";
-import {authStore} from "@/store/auth/slice";
+import {authStore, IAuthState} from "@/store/auth/slice";
 import {Dispatch} from "redux";
 
 export const authenticateCurrentUser = (is_authenticated: boolean) => async(dispatch: Dispatch) =>
-    dispatch(authStore({ isAuthenticated: is_authenticated }))
+    dispatch(authStore({ isAuthenticated: is_authenticated }));
+
+export const setCurrentUser = (user: IAuthState["user"]) => async(dispatch: Dispatch) =>
+    dispatch(authStore({ user }))
 
 export const login = (formData: {email: string, password: string}) => async(dispatch) => {
 
@@ -17,7 +20,6 @@ export const login = (formData: {email: string, password: string}) => async(disp
         .then((data) => {
             toast.success('welcome..', {id: submitToast});
             dispatch(authenticateCurrentUser(true))
-            localStorage.setItem("token", data.data.access_token);
             window.location.href = '/dashboard'
         })
         .catch((e) => {
@@ -90,14 +92,13 @@ export const authenticate = () => async (dispatch) => {
 
     dispatch(setLoadingState(true))
 
-    await axios.patch('/auth')
+    await axios.get('/auth')
         .then((data) => {
             dispatch(authenticateCurrentUser(true))
-
-            localStorage.setItem("token", data.data.access_token);
+            dispatch(setCurrentUser(data.data))
         }).catch((e) => {
-            console.log(e)
             dispatch(authenticateCurrentUser(false))
+            dispatch(setCurrentUser(null))
             switch(e.status){
                 case 401:
                     toast.error('please login again..');
@@ -105,11 +106,9 @@ export const authenticate = () => async (dispatch) => {
                     break;
                 default:
                     toast.error('something went wrong..');
-                    console.log('login error', e);
             }
             window.location.href = "/login"
         }).finally(() => {
-            console.log('ended')
             dispatch(setLoadingState(false))
         })
 }

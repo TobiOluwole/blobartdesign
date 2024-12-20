@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -20,5 +21,12 @@ Route::group(["prefix" => "/api"], function () {
         Route::patch('/reset-password/{token?}',[UserController::class, 'resetPassword']);
 
     });
+
+
+    Route::group(["prefix" => "/pages"], function () {
+        Route::get('/', [PageController::class, 'allPages']);
+    });
+
+    Route::get('page/{name?}', [PageController::class, 'getPage']);
 
 });

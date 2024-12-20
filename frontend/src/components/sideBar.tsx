@@ -2,12 +2,18 @@ import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import {useAppDispatch} from "@/store";
 import {logout} from "@/store/auth/actions";
+import {useState} from "react";
 
 export default function SideBar(Component: any){
     return function sideBar(props: any) {
 
-        const router = useRouter()
         const dispatch = useAppDispatch()
+
+        const [isOpen, setIsOpen] = useState(false);
+
+        const toggleSidebar = () => {
+            setIsOpen(!isOpen);
+        };
 
         async function logOut() {
             dispatch(logout())
@@ -15,8 +21,7 @@ export default function SideBar(Component: any){
 
         return (
             <>
-                <button data-drawer-target="separator-sidebar" data-drawer-toggle="separator-sidebar"
-                        aria-controls="separator-sidebar" type="button"
+                <button onClick={toggleSidebar} type="button"
                         className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                     <span className="sr-only">Open sidebar</span>
                     <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -26,14 +31,25 @@ export default function SideBar(Component: any){
                     </svg>
                 </button>
 
-                <aside id="separator-sidebar"
-                       className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+                <aside className={
+                    `
+                        fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0
+                        ${
+                            isOpen ? 'translate-x-0' : '-translate-x-full'
+                        }
+                    `
+                }
                        aria-label="Sidebar">
                     <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                        <span className="visible sm:invisible cursor-pointer" onClick={toggleSidebar}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="h-4 fill-current float-right">
+                                <path
+                                    d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
+                        </span>
                         <ul className="space-y-2 font-medium">
                             <li>
                                 <Link href="/dashboard"
-                                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <svg
                                         className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -47,7 +63,7 @@ export default function SideBar(Component: any){
                                 </Link>
                             </li>
                             <li>
-                                <a href="#"
+                                <Link href="/pages"
                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <svg
                                         className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -56,10 +72,8 @@ export default function SideBar(Component: any){
                                         <path
                                             d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
                                     </svg>
-                                    <span className="flex-1 ms-3 whitespace-nowrap">Kanban</span>
-                                    <span
-                                        className="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
-                                </a>
+                                    <span className="flex-1 ms-3 whitespace-nowrap">Pages</span>
+                                </Link>
                             </li>
                             <li>
                                 <a href="#"

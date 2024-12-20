@@ -3,6 +3,7 @@ import { appReducer } from "@/store/app/slice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {combineReducers} from "@reduxjs/toolkit";
+import {webReducer} from "@/store/web/slice";
 
 const authPersistConfig = {
     key: "auth",
@@ -13,8 +14,13 @@ const appPersistConfig = {
     key: "app",
     storage: storage,
 };
+const webPersistConfig = {
+    key: "web",
+    storage: storage,
+};
 
 export default combineReducers({
     app: persistReducer(appPersistConfig, appReducer),
     auth: persistReducer(authPersistConfig, authReducer),
+    web: webReducer,
 });
