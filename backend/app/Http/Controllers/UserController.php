@@ -45,8 +45,8 @@ class UserController extends Controller implements HasMiddleware
         return $this->userService->login($request->email,$request->password);
     }
 
-    public function myToken(){
-        return $this->userService->myToken();
+    public function myToken(Request $request){
+        return $request->user();
     }
 
     public function getNewToken(){

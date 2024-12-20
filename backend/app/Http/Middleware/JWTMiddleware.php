@@ -18,37 +18,30 @@ class JWTMiddleware
      */
     public function handle(Request $request,  Closure $next)
     {
+        $token = $request->cookie('jwt_token');
+
         try {
-//
-
-//            if ($this->isExcluded($request)) {
-//                return $response;
-//            }
-
 
             if($request->route()->getActionName() == "App\Http\Controllers\UserController@logout"){
-                error_log($request->route()->getActionName());
                 return $next($request);
             }
 
             // Get the token from the 'jwt_token' cookie
-            $token = $request->cookie('jwt_token');
 
             if (!$token) {
                 return response()->json(['message' => 'Token not provided'], 401);
             }
 
-            $old = JWTAuth::getToken();
-            JWTAuth::factory()->setTTL(15);
-            $new = JWTAuth::refresh();
-            JWTAuth::invalidate($old);
+            JWTAuth::setToken($token)->authenticate();
+            $new = JWTAuth::refresh($token);
+            JWTAuth::invalidate($token);
 
             // Attempt to authenticate using the token
             $user = JWTAuth::setToken($new)->authenticate();
             if (!$user) {
                 return response()->json(['message' => 'User not found'], 401);
             }
-
+            $request->$user = $user;
 
             $response = $next($request);
             $response->withCookie('jwt_token', $new, 15, '/', null, true, true);
@@ -59,7 +52,8 @@ class JWTMiddleware
             } elseif ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json(['message' => 'Token invalid'], 401);
             } else {
-                return response()->json(['message' => 'Token error: ' . $e->getMessage()], 401);
+                return response()->json(['message' => 'Token error: ' . $e->getMessage()], 401)
+                    ->withCookie('jwt_token', $token, 15, '/', null, true, true);
             }
         }
 
