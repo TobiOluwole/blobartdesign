@@ -81,7 +81,7 @@ class UserService
                 function ($user){
                     $tokenInfo = PasswordResetToken::where('email', $user->email)->first();
                     $urlToken = urlencode($tokenInfo->token);
-                    $link = "http://localhost:3000/forgot-password/$urlToken";
+                    $link = "http://localhost:3000/admin/forgot-password/$urlToken";
 
                     Mail::html(
                         "

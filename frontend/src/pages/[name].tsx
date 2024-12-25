@@ -17,7 +17,7 @@ function DynamicPage () {
 
     return (
             <>
-                htyjtyyjjtyjtyjtyj
+                {name}
             </>
     )
 

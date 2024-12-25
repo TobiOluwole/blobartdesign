@@ -27,14 +27,14 @@ AxiosInstance.interceptors.request.use(
     },
 );
 
-AxiosInstance.interceptors.response.use(
-    (response) => {
-        return response
-    },
-    (error) => {
-        console.log('errrrrrrrrrrrrrr', error.statusCode);
-        return error
-    }
-)
+// AxiosInstance.interceptors.response.use(
+//     (response) => {
+//         return response
+//     },
+//     (error) => {
+//         console.log('errrrrrrrrrrrrrr', error.statusCode);
+//         return error
+//     }
+// )
 
 export default AxiosInstance

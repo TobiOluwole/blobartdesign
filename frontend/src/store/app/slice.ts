@@ -6,6 +6,7 @@ export interface IAppState {
         id: number;
         url: string;
         display_name: string;
+        display_name_tr: string;
         page_id: number,
         is_home: number,
     }[];

@@ -30,7 +30,7 @@ export const setPages = (pages: IWebState["pages"]) => async(dispatch) =>
 
 export const getPages = () => async(dispatch) => {
 
-    const toast = toast.loading("getting pages ...")
+    // const toast = toast.loading("getting pages ...")
 
     await axios.get('/pages')
         .then((data) => {

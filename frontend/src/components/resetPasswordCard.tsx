@@ -54,7 +54,7 @@ export default function ResetPasswordCard({token}: ResetPasswordCardProps) {
                     </button>
                 </div>
             </form>
-            <Link href="/login" className="-mt-12 ml-5 w-fit">back to login..</Link>
+            <Link href="/admin/login" className="-mt-12 ml-5 w-fit">back to login..</Link>
         </>
     );
 }

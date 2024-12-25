@@ -1,7 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'centurygothic';
+  src: url('./font/centurygothic.ttf')  format('truetype');
+}
 
 :root {
   --background: #ffffff;
@@ -24,5 +28,90 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-family: "Century Gothic", sans-serif;
+}
+
+
+/* ======= Slider left panel style ======= */
+.left-panel {
+  background: transparent;
+  position: absolute;
+  width: 143px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+
+.social-left {
+  display: block;
+  margin: 0;
+  padding: 10px 0;
+  list-style: none;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 24px;
+  background: transparent;
+  z-index: 10;
+}
+
+.social-left:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 70px;
+  top: -70px;
+  background: #ececec;
+}
+
+.social-left li {
+  display: block;
+  margin: 0;
+  padding: 3px 0;
+}
+.social-left li:first-child {}
+.social-left li a {
+  display: inline-block;
+  text-decoration: none;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 13px;
+  border: 1px solid #ececec;
+  color: white;
+  border-radius: 100%;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s;
+}
+.social-left li a:hover {
+  color: #58585a;
+  border: 1px solid #58585a;
+}
+@media (max-width: 1259.98px) {
+  .left-panel {
+    width: 100px;
+  }
+}
+@media (max-width: 991.98px) {
+  .left-panel {
+    width: 50px;
+  }
+}
+@media (max-width: 767.98px) {
+  .left-panel {
+    display: none;
+  }
+  .prevCarBut {
+    display: none;
+  }
+  .nextCarBut {
+    display: none;
+  }
 }

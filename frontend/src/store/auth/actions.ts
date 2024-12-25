@@ -20,7 +20,7 @@ export const login = (formData: {email: string, password: string}) => async(disp
         .then((data) => {
             toast.success('welcome..', {id: submitToast});
             dispatch(authenticateCurrentUser(true))
-            window.location.href = '/dashboard'
+            window.location.href = '/admin/dashboard'
         })
         .catch((e) => {
             dispatch(authenticateCurrentUser(false))
@@ -72,14 +72,14 @@ export const logout = () => async (dispatch) => {
         .then((data) => {
             toast.success('good bye..', {id: submitToast});
             dispatch(authenticateCurrentUser(false))
-            window.location.href = '/login'
+            window.location.href = '/admin/login'
         })
         .catch((e) => {
             console.log(e.status)
             switch(e.status){
                 case 401:
                     toast.success('already logged out..', {id: submitToast});
-                    window.location.href = '/login'
+                    window.location.href = '/admin/login'
                     return
                 default:
                     toast.error('something went wrong..', {id: submitToast});
@@ -107,7 +107,7 @@ export const authenticate = () => async (dispatch) => {
                 default:
                     toast.error('something went wrong..');
             }
-            window.location.href = "/login"
+            window.location.href = "/admin/login"
         }).finally(() => {
             dispatch(setLoadingState(false))
         })
@@ -120,7 +120,7 @@ export const resetPassword = (token: string, formData: {password: string, passwo
     await axios.patch('/auth/reset-password/'+encodeURI(token), formData)
         .then((data) => {
             toast.success('success, please login..', {id: submitToast});
-            window.location.href = '/login'
+            window.location.href = '/admin/login'
         })
         .catch((e) => {
             switch (e.status) {

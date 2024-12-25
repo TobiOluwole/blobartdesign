@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SectionsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -27,6 +28,16 @@ Route::group(["prefix" => "/api"], function () {
         Route::get('/', [PageController::class, 'allPages']);
     });
 
-    Route::get('page/{name?}', [PageController::class, 'getPage']);
+    Route::group(["prefix" => "/page"], function () {
+        Route::get('/{name?}', [PageController::class, 'getPage']);
+        Route::post('/', [PageController::class, 'createPage']);
+        Route::put('/{id?}', [PageController::class, 'updatePage']);
+    });
+
+    Route::group(["prefix" => "/sections"], function () {
+        Route::get('/{page_id?}', [SectionsController::class, 'getPageSections']);
+        Route::post('/', [PageController::class, 'createSection']);
+        Route::put('/{id?}', [SectionsController::class, 'updateSections']);
+    });
 
 });

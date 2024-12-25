@@ -41,7 +41,7 @@ export default function ForgotPasswordCard(token: string) {
                 <div className="h-8">
                 </div>
             </form>
-            <Link href="/login" className="-mt-12 ml-5 w-fit">back to login..</Link>
+            <Link href="/admin/login" className="-mt-12 ml-5 w-fit">back to login..</Link>
         </>
     );
 }

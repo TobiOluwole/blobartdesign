@@ -12,8 +12,8 @@ class PageService {
         return Page::all();
     }
 
-    public function getPage($name){
-        $page = Page::where('display_name', $name)->first();
+    public function getPage($nameOrId){
+        $page = $nameOrId !== null ? Page::where('url', $nameOrId)->orWhere('id', $nameOrId)->first() : Page::where('is_home', 1)->first();
 
         if($page){
             return response()->json($page, 200);
@@ -21,4 +21,25 @@ class PageService {
 
         return response()->json(null, 404);
     }
+
+    public function updatePage($id, $data){
+        $page = Page::find($id);
+
+        if($page){
+            $page->update($data);
+            $page->save();
+
+            return response()->json($page, 200);
+        }
+
+        return response()->json(null, 404);
+    }
+
+    public function createdPage($data){
+        $page = new Page($data);
+        $page->save();
+
+        return response()->json($page, 200);
+    }
+
 }
