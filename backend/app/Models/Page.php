@@ -44,6 +44,6 @@ class Page extends Model {
     ];
 
     public function sections(): HasMany {
-        return $this->hasMany(Sections::class);
+        return $this->hasMany(Sections::class)->orderBy('sort_id', 'asc');
     }
 }

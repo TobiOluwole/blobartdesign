@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getPages} from "@/store/web/actions";
+import {getPages, getSocials} from "@/store/web/actions";
 import {UnknownAction} from "redux";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "@/store";
@@ -21,9 +21,11 @@ export default function WebFrame(Component: any) {
 
 
         const currentHttpStatus = useAppSelector((state) => state.web.currentHttpStatus);
+        const pages = useAppSelector((state) => state.web.pages);
 
         useEffect(() => {
             dispatch(getPages() as UnknownAction)
+            dispatch(getSocials() as UnknownAction)
         }, [dispatch]);
 
         useEffect(() => {
@@ -43,16 +45,23 @@ export default function WebFrame(Component: any) {
                 {
                     currentHttpStatus === 200 &&
                     <>
-                        <nav className={`flex flex-wrap lg:flex-nowrap h-36 pr-5 md:pr-36 w-full fixed top-0 items-center justify-center transition-all duration-500 z-50  ${isAtTop ? 'bg-transparent text-white' : 'bg-white text-black'}`}>
+                        <nav id={'pageNav'} className={`flex flex-wrap lg:flex-nowrap sm:h-36 h-16 pr-5 md:pr-36 w-full fixed top-0 items-center justify-center transition-all duration-500 z-50 uppercase  ${isAtTop ? 'bg-transparent text-white' : 'bg-white text-black shadow-lg'}`}>
                             <Link href="/" className={`flex-none ml-5 p-[15px] h-full ${isAtTop ? '' : 'invert'}`}>
                                 <img src="/img/logo.png" alt="logo" className="h-full"/>
                             </Link>
                             <div className="flex-grow"></div>
-                            <Link href="/" className="hidden lg:block px-3  mx-1.5 text-base tracking-navNormal">ANASAYFA</Link>
-                            <Link href="/hakkimizda" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">HAKKIMIZDA</Link>
-                            <Link href="/projeler" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">PROJELER</Link>
-                            <Link href="/proje-ekibi" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">PROJE EKİBİ</Link>
-                            <Link href="/bize-ulasin" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">BİZE ULAŞIN</Link>
+                            {
+                                pages.map((page) => {
+                                    return (
+                                            <Link href={`/${page.url}`} className="hidden lg:block px-3 flex-shrink mx-1.5 text-base hover:text-[#58585a] transition-all duration-350 tracking-navNormal">{page.display_name}</Link>
+                                        )
+                                })
+                            }
+                            {/*<Link href="/" className="hidden lg:block px-3  mx-1.5 text-base tracking-navNormal">ANASAYFA</Link>*/}
+                            {/*<Link href="/hakkimizda" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">HAKKIMIZDA</Link>*/}
+                            {/*<Link href="/projeler" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">PROJELER</Link>*/}
+                            {/*<Link href="/proje-ekibi" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">PROJE EKİBİ</Link>*/}
+                            {/*<Link href="/bize-ulasin" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">BİZE ULAŞIN</Link>*/}
                             <Link href="/en" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">EN</Link>
                             <button>
                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -75,27 +84,18 @@ export default function WebFrame(Component: any) {
                             <ul
                                 className={`bg-white text-black flex flex-col flex-grow w-screen md:w-full transition-height ease-in-out duration-500 overflow-y-scroll lg:hidden ${isNavOpen ? ' h-80 p-5' : ' h-0'}`}
                             >
-                                <li className="py-3">
-                                    <Link href="#">linnieflnkewfwe</Link>
-                                </li>
-                                <li className="py-3">
-                                    <Link href="#">linnieflnkewfwe</Link>
-                                </li>
-                                <li className="py-3">
-                                    <Link href="#">linnieflnkewfwe</Link>
-                                </li>
-                                <li className="py-3">
-                                    <Link href="#">linnieflnkewfwe</Link>
-                                </li>
-                                <li className="py-3">
-                                    <Link href="#">linnieflnkewfwe</Link>
-                                </li>
-                                <li className="py-3">
-                                    <Link href="#">linnieflnkewfwe</Link>
-                                </li>
+                                {
+                                    pages.map((page) => {
+                                        return (
+                                            <li className="py-3">
+                                                <Link href={`/${page.url}`}>{page.display_name}</Link>
+                                            </li>
+                                        )
+                                    })
+                                }
                             </ul>
                         </nav>
-                        <div className="min-h-screen">
+                        <div className="min-h-screen bg-white">
                             <Component {...props} />
                         </div>
                         <Footer />

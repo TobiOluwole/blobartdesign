@@ -13,7 +13,10 @@ class PageService {
     }
 
     public function getPage($nameOrId){
-        $page = $nameOrId !== null ? Page::where('url', $nameOrId)->orWhere('id', $nameOrId)->first() : Page::where('is_home', 1)->first();
+        $page =
+            $nameOrId !== null ?
+                Page::where('url', $nameOrId)->orWhere('id', $nameOrId)->with('sections')->first() :
+                Page::where('is_home', 1)->with('sections')->first();
 
         if($page){
             return response()->json($page, 200);

@@ -40,4 +40,8 @@ Route::group(["prefix" => "/api"], function () {
         Route::put('/{id?}', [SectionsController::class, 'updateSections']);
     });
 
+
+    Route::get('/socials', [SectionsController::class, 'getSocials']);
+    Route::put('/socials', [SectionsController::class, 'setSocials']);
+
 });

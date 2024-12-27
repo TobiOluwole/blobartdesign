@@ -31,6 +31,10 @@ body {
   font-family: "Century Gothic", sans-serif;
 }
 
+.ql-toolbar {
+  background-color: white !important;
+}
+
 
 /* ======= Slider left panel style ======= */
 .left-panel {

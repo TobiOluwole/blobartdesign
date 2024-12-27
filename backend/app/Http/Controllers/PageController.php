@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\JWTMiddleware;
 use App\Http\Services\PageService;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PageController extends Controller{
+class PageController extends Controller implements HasMiddleware {
     protected PageService $pageService;
 
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(JWTMiddleware::class, except: [
+                'allPages',
+                'getPage',
+            ])
+        ];
+    }
     public function __construct(PageService $pageService){
         $this->pageService = $pageService;
     }

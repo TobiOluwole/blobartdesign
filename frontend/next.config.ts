@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
   env:{
-    BASE_URL:'http://localhost:8000/api/'
+    BACKEND_URL:'http://localhost:8000',
+    BASE_URL:'http://localhost:8000/api/',
   },
 
 };

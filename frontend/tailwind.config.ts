@@ -32,10 +32,11 @@ export default {
       animation: {
         fadeOut: 'fadeOut 0.5s ease forwards',
         slideIn: 'slideIn 0.5s ease forwards',
+        slideUp: 'slideUp 0.7s ease-in-out forwards'
       },
     },
   },
   plugins: [
-    // plugin(),
+    require('@tailwindcss/typography'),
   ],
 } satisfies Config;

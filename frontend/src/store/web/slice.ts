@@ -4,12 +4,32 @@ export interface IWebState {
     currentHttpStatus: 200 | 404;
     loading: boolean;
     pages: {}[];
+    socials:{
+        phone: string;
+        email: string;
+        address: string;
+        facebook: string;
+        twitter: string;
+        instagram: string;
+        linkedin: string;
+        location_link: string;
+    }
 }
 
 export const initialState: IWebState = {
     currentHttpStatus: 200,
     loading: false,
-    pages: []
+    pages: [],
+    socials:{
+        phone: "",
+        email: "",
+        address: "",
+        facebook: "",
+        twitter: "",
+        instagram: "",
+        linkedin: "",
+        location_link: '',
+    }
 };
 
 export const webSlice = createSlice({
