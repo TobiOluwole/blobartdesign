@@ -32,12 +32,15 @@ Route::group(["prefix" => "/api"], function () {
         Route::get('/{name?}', [PageController::class, 'getPage']);
         Route::post('/', [PageController::class, 'createPage']);
         Route::put('/{id?}', [PageController::class, 'updatePage']);
+        Route::delete('/{id}', [PageController::class, 'deletePage']);
     });
 
     Route::group(["prefix" => "/sections"], function () {
+        Route::get('/gallery/{section_id}/{gallery_name}', [SectionsController::class, 'getGalleryImages']);
         Route::get('/{page_id?}', [SectionsController::class, 'getPageSections']);
         Route::post('/', [PageController::class, 'createSection']);
         Route::put('/{id?}', [SectionsController::class, 'updateSections']);
+        Route::delete('/{id?}', [SectionsController::class, 'deleteSections']);
     });
 
 

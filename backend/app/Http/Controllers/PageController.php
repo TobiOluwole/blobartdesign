@@ -45,4 +45,8 @@ class PageController extends Controller implements HasMiddleware {
         }
         return $this->pageService->createdPage($request->only('display_name', 'display_name_tr', 'is_home', 'page_id', 'url' ));
     }
+
+    public function deletePage($id = null){
+        return $this->pageService->deletePage($id);
+    }
 }

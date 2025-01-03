@@ -57,11 +57,9 @@ export default function WebFrame(Component: any) {
                                         )
                                 })
                             }
-                            {/*<Link href="/" className="hidden lg:block px-3  mx-1.5 text-base tracking-navNormal">ANASAYFA</Link>*/}
-                            {/*<Link href="/hakkimizda" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">HAKKIMIZDA</Link>*/}
-                            {/*<Link href="/projeler" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">PROJELER</Link>*/}
-                            {/*<Link href="/proje-ekibi" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">PROJE EKİBİ</Link>*/}
-                            {/*<Link href="/bize-ulasin" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">BİZE ULAŞIN</Link>*/}
+                            <Link href="/bize-ulasin" className="hidden lg:block px-3 flex-shrink mx-1.5 text-base hover:text-[#58585a] transition-all duration-350 tracking-navNormal">
+                                Contact Us
+                            </Link>
                             <Link href="/en" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">EN</Link>
                             <button>
                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -88,14 +86,17 @@ export default function WebFrame(Component: any) {
                                     pages.map((page) => {
                                         return (
                                             <li className="py-3">
-                                                <Link href={`/${page.url}`}>{page.display_name}</Link>
+                                                <Link className={"text-black !filter-none"} href={`/${page.url}`}>{page.display_name}</Link>
                                             </li>
                                         )
                                     })
                                 }
+                                <li className="py-3">
+                                    <Link className={"text-black  !filter-none"} href="/bize-ulasin">Contact Us</Link>
+                                </li>
                             </ul>
                         </nav>
-                        <div className="min-h-screen bg-white">
+                        <div className="min-h-screen bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:360px_100%] [background-position-x:-180px]">
                             <Component {...props} />
                         </div>
                         <Footer />

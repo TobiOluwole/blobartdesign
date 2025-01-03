@@ -45,4 +45,10 @@ class PageService {
         return response()->json($page, 200);
     }
 
+    public function deletePage($id){
+        Page::destroy($id);
+
+        return response()->json(null, 204);
+    }
+
 }

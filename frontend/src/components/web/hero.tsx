@@ -29,8 +29,7 @@ export default function Hero({idx, slides, includeSocials = false}){
         }
     }
     return (
-        <>
-            <div className="relative h-screen w-full p-0 m-0">
+        <div key={idx} className="relative h-screen w-full p-0 m-0">
                 <div
                     className={`absolute top-[50%] right-[12%] z-40 text-white p-2 rounded transition-all ease-in-out sm:text-2xl md:text-5xl text duration-500 w-[80vw] sm:w-[50vw]  ${textAnimation}`}
                 >
@@ -138,6 +137,5 @@ export default function Hero({idx, slides, includeSocials = false}){
                     </div>
                 }
             </div>
-        </>
     )
 }

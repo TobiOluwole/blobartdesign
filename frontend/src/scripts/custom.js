@@ -94,7 +94,7 @@ $(function() {
 		, });
 	});
 
-    // Isotope Active Masonry Gallery
+    // Isotope Active Masonry Index
 	$('.bauen-gallery-items').imagesLoaded(function () {
 		// Add isotope on click filter function
 		$('.bauen-gallery-filter li').on('click', function () {

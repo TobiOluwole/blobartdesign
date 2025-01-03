@@ -25,10 +25,10 @@
  23. Projects2 (masonry) style
  24. Projects3 style
  25. Projects4 style
- 26. Project Gallery style
+ 26. Project Index style
  27. Project Page style - [NEW]
  28. Clients style
- 29. Gallery style
+ 29. Index style
  30. Promo Video and Testimonials style
  31. Blog 1 style
  32. Blog 2 style
@@ -2611,7 +2611,7 @@ blockquote cite:before {
 }
 
 
-/* ======= Project Gallery style ======= */
+/* ======= Project Index style ======= */
 .gallery-masonry-wrapper {
     width: 100%;
     position: relative;
@@ -2845,7 +2845,7 @@ blockquote cite:before {
 }
 
 
-/* ======= Gallery style ======= */
+/* ======= Index style ======= */
 .gallery-item {
     position: relative;
     padding-top: 20px;

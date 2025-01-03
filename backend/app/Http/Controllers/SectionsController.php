@@ -21,6 +21,7 @@ class SectionsController extends Controller implements HasMiddleware {
             new Middleware(JWTMiddleware::class, except: [
                 'getSocials',
                 'getPageSections',
+                'getGalleryImages'
             ])
         ];
     }
@@ -50,4 +51,11 @@ class SectionsController extends Controller implements HasMiddleware {
         return $this->sectionsService->updateSections($request->all());
     }
 
+    public function deleteSections($id){
+        return $this->sectionsService->deleteSections($id);
+    }
+
+    public function getGalleryImages($section_id, $gallery_name){
+        return $this->sectionsService->getGalleryImages($section_id, $gallery_name);
+    }
 }

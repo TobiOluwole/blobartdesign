@@ -1,4 +1,4 @@
-export default function Banner({image, isTop = false}){
+export default function Banner({image, isTop = false, isImageForced = false}){
     return (
         <>
             {isTop && (<style>
@@ -15,12 +15,12 @@ export default function Banner({image, isTop = false}){
             <div className="h-[50vh] bg-white overflow-hidden relative">
                 <div
                     style={{
-                        backgroundImage: `url(${process.env.BACKEND_URL + image})`,
-                        backgroundAttachment: 'fixed',
+                        backgroundImage: `url(${isImageForced ? image : process.env.BACKEND_URL + image})`,
+                        backgroundAttachment: 'fixed center',
                         backgroundSize: 'cover'
                     }}
                     className={`w-full object-cover bg-black m-auto h-full`}></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-white from-5% to-white/75"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-white from-1% to-white/80"></div>
             </div>
         </>
     )

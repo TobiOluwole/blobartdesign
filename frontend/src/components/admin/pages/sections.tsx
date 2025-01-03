@@ -5,6 +5,8 @@ import axios from "@/utils/axiosInstance";
 import HeroSection from "@/components/admin/sections/hero";
 import BannerSection from "@/components/admin/sections/banner";
 import TextSection from "@/components/admin/sections/text";
+import Gallery from "@/components/admin/sections/gallery";
+import Team from "@/components/admin/sections/team";
 
 export default function Sections(){
     const router = useRouter()
@@ -39,6 +41,42 @@ export default function Sections(){
             text_en: '',
             text_tr: ''
         }
+    }
+
+    const galleryBoilerPlate = {
+        type: 'gallery',
+        page_id: pageId,
+        content: {
+            title_en:'',
+            title_tr:'',
+            galleries: [{
+                name_en: '',
+                name_tr: '',
+                group_name_en: '',
+                group_name_tr: '',
+                images: []
+            }]
+        }
+    }
+
+    const teamBoilerPlate = {
+        type: 'team',
+        page_id: pageId,
+        content: {
+            title_en:'',
+            title_tr:'',
+            members: [{
+                name: '',
+                position_en: '',
+                position_tr: '',
+                image: ''
+            }]
+        }
+    }
+
+    const contactBoilerPlate = {
+        type: 'contact',
+        page_id: pageId,
     }
 
     function saveSections(){
@@ -87,9 +125,24 @@ export default function Sections(){
         }
     }
 
-    function deleteSection(index) {
-        const updatedSections = sections.filter((_, i) => i !== index);
-        setSections(updatedSections);
+    async function deleteSection(sectionId) {
+        const toastToDelete = toast.loading('deleting section...')
+        try {
+            // Send a request to delete the section
+            const response = await axios.delete(`sections/${sectionId}`);
+
+            if (response.status === 200) {
+                // If successful, update the state to remove the section
+                updateSections((prevSections) => {
+                    return prevSections.filter(section => section.id !== sectionId);
+                });
+                // Optionally, show a success toast or message
+                toast.success("Section deleted successfully!", {id: toastToDelete});
+            }
+        } catch (error) {
+            console.error("Error deleting section", error);
+            toast.error("Error deleting section.", {id: toastToDelete});
+        }
     }
 
     useEffect(() => {
@@ -122,8 +175,16 @@ export default function Sections(){
                                 <TextSection data={section.content} updateSections={updateSections} idx={index}/>
                             )}
 
+                            {section.type === 'gallery' && (
+                                <Gallery gallery={section.content} updateSections={updateSections} idx={index}/>
+                            )}
+
+                            {section.type === 'team' && (
+                                <Team team={section.content} updateSections={updateSections} idx={index}/>
+                            )}
+
                             <button
-                                onClick={() => deleteSection(index)}
+                                onClick={() => deleteSection(section.id)}
                                 className="float-right bg-red-500 text-white p-2 rounded hover:bg-red-600"
                             >
                                 Delete
@@ -174,9 +235,21 @@ export default function Sections(){
                         setSections([...sections, {...textBoilerPlate}])
                     }
                 }> Add Text</button>
-                <button className="bg-green-500 p-3 rounded"> Add Gallery</button>
-                <button className="bg-yellow-500 p-3 rounded"> Add Team</button>
-                <button className="bg-orange-500 p-3 rounded"> Add Contact Form</button>
+                <button className="bg-green-500 p-3 rounded" onClick={
+                    () => {
+                        setSections([...sections, {...galleryBoilerPlate}])
+                    }
+                }> Add Gallery</button>
+                <button className="bg-yellow-500 p-3 rounded" onClick={
+                    () => {
+                        setSections([...sections, {...teamBoilerPlate}])
+                    }
+                }> Add Team</button>
+                <button className="bg-orange-500 p-3 rounded" onClick={
+                    () => {
+                        setSections([...sections, {...contactBoilerPlate}])
+                    }
+                }> Add Contact Form</button>
             </div>
         </>
     )
