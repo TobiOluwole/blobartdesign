@@ -2,6 +2,7 @@ import {IWebState, webStore} from "@/store/web/slice";
 import {setLoadingState} from "@/store/app/actions";
 import axios from "@/utils/axiosInstance";
 import {toast} from "react-hot-toast";
+import {store} from "@/store";
 
 export const setHttpStatus = (status: IWebState["currentHttpStatus"]) => async(dispatch) =>
     dispatch(webStore({ currentHttpStatus: status }))
@@ -39,4 +40,12 @@ export const getSocials = () => async(dispatch) => {
         .then((data) => {
             dispatch(setSocialsData(data.data))
         }).catch((e) => {})
+}
+
+export const  switchLanguage = () => async(dispatch, getState) => {
+    const state = getState()
+    const language = state.web.lang == 'tr' ? 'en' : 'tr'
+    console.log('langChange', language)
+
+    dispatch(webStore({lang : language}))
 }

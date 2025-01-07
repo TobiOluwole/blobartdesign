@@ -57,7 +57,7 @@ function GalleryView(){
                     }}
                     observer={true}
                     observeParents={true}
-                    className="mySwiper w-[72%] max-h-[1110px] m-auto -mt-36 z-40 relative"
+                    className="mySwiper w-[72%] max-w-[1110px] m-auto -mt-36 z-40 relative"
                 >
                     <>
                         {

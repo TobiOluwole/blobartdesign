@@ -1,8 +1,12 @@
+import LangConv from "@/components/web/langConv";
+
 export default function Team({key, data}){
     return (
         <>
             <div className={"max-w-[75%]  m-auto pb-32"}>
-                <h1 className={"text-[40px] font-normal text-[#272727] uppercase relative tracking-[10px] mb-[30px]"}>{data.title_en}</h1>
+                <h1 className={"text-[40px] font-normal text-[#272727] uppercase relative tracking-[10px] mb-[30px]"}>
+                    <LangConv en={data.title_en} tr={data.title_tr}/>
+                </h1>
 
                 <div className={"grid lg:grid-cols-6 grid-cols-1 w-full justify-items-center"}>
                     {
@@ -17,8 +21,10 @@ export default function Team({key, data}){
                                             }}
                                             className={"w-[350px] h-[466px]"}></div>
                                         <div className={"relative overflow-hidden px-5 py-[30px] grid justify-items-center"}>
-                                            <h6 className={"text-[17px] uppercase font-light tracking-[3px] text-[#272727] mb-[5px]"}> {member.name}</h6>
-                                            <p className={"text-base font-normal leading-[1.75em] text-[#777] mb-5;"}>{member.position_en}</p>
+                                            <h6 className={"text-[17px] uppercase font-light tracking-[3px] text-[#272727] mb-[5px] text-center"}>{member.name}</h6>
+                                            <p className={"text-base font-normal leading-[1.75em] text-[#777] mb-5 text-center"}>
+                                                <LangConv en={member.position_en} tr={member.position_tr}/>
+                                            </p>
                                         </div>
                                     </div>
                                 </>

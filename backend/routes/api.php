@@ -33,6 +33,8 @@ Route::group(["prefix" => "/api"], function () {
         Route::post('/', [PageController::class, 'createPage']);
         Route::put('/{id?}', [PageController::class, 'updatePage']);
         Route::delete('/{id}', [PageController::class, 'deletePage']);
+
+        Route::post('/contact', [PageController::class, 'sendContactMail']);
     });
 
     Route::group(["prefix" => "/sections"], function () {

@@ -10,12 +10,13 @@ import {useState} from "react";
 import Link from "next/link";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store";
+import LangConv from "@/components/web/langConv";
 
 export default function Hero({idx, slides, includeSocials = false}){
 
     const socials = useSelector((state: RootState) => state.web.socials);
 
-    const [altText, setAltText] = useState("");
+    const [altText, setAltText] = useState(<></>);
     const [textAnimation, setTextAnimation] = useState("");
     function changeText(swiper) {
         const activeSlide = swiper.slides[swiper.activeIndex];
@@ -23,7 +24,7 @@ export default function Hero({idx, slides, includeSocials = false}){
         if (img) {
             setTextAnimation("animate-fadeOut"); // Trigger fade-out animation
             setTimeout(() => {
-                setAltText(img.alt); // Update the text
+                setAltText(<LangConv en={img.dataset.textEn} tr={img.dataset.textTr} />)
                 setTextAnimation("animate-slideIn"); // Trigger slide-in animation
             }, 500); // Match fade-out duration
         }
@@ -77,7 +78,7 @@ export default function Hero({idx, slides, includeSocials = false}){
                             return (
                                 <SwiperSlide>
                                     <img className="min-h-full min-w-full h-full brightness-[.3] object-cover bg-black m-auto" src={process.env.BACKEND_URL + slide.image}
-                                         alt={slide.text_en}/>
+                                         data-text-en={slide.text_en} data-text-tr={slide.text_tr} alt={'image'}/>
                                 </SwiperSlide>
                             )
                         })

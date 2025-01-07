@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IWebState {
+    lang: 'tr' | 'en';
     currentHttpStatus: 200 | 404;
     loading: boolean;
     pages: {}[];
@@ -17,6 +18,7 @@ export interface IWebState {
 }
 
 export const initialState: IWebState = {
+    lang: "tr",
     currentHttpStatus: 200,
     loading: false,
     pages: [],

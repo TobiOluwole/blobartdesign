@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 
 use App\Models\Page;
+use Illuminate\Support\Facades\Mail;
 
 class PageService {
 
@@ -51,4 +52,18 @@ class PageService {
         return response()->json(null, 204);
     }
 
+    public function sendContactMail($name, $email, $message){
+        Mail::html(
+            "
+                    Hi, Admin <br />
+                    You have a new message from $name with $email :<br />
+                    $message
+                ",
+            function ($message) {
+                $message->to("tobioluwole69@gmail.com")
+                    ->subject('Contact Form Mail');
+            });
+
+        return response()->json(null, 204);
+    }
 }

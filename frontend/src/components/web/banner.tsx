@@ -3,7 +3,7 @@ export default function Banner({image, isTop = false, isImageForced = false}){
         <>
             {isTop && (<style>
                 {`
-                    #pageNav a {
+                    #pageNav {
                         color: black;
                     }
                     

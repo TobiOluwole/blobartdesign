@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store";
+import LangConv from "@/components/web/langConv";
 
 export default function Footer(){
     const socials = useSelector((state: RootState) => state.web.socials);
@@ -11,7 +12,9 @@ export default function Footer(){
                     <div className="mb-8">
                         <div className="">
                             <div className="pb-1.5">
-                                <h6>Telefon</h6>
+                                <h6>
+                                    <LangConv en={'Phone'} tr={'Telefon'} />
+                                </h6>
                             </div>
                             <p><a href={`tel:${socials.phone}`}>{socials.phone}</a></p>
                         </div>
@@ -19,7 +22,9 @@ export default function Footer(){
                     <div className="mb-8">
                         <div className="">
                             <div className="pb-1.5">
-                                <h6>E-posta</h6>
+                                <h6>
+                                    <LangConv en={'Email'} tr={'E-posta'} />
+                                </h6>
                             </div>
                             <p><a href={`mailto:${socials.email}`}>{socials.email}</a></p>
                         </div>
@@ -27,7 +32,9 @@ export default function Footer(){
                     <div className="mb-8">
                         <div className="">
                             <div className="pb-1.5">
-                                <h6>Adres</h6>
+                                <h6>
+                                    <LangConv en={'Address'} tr={'E-Adres'} />
+                                </h6>
                             </div>
                             <p><a target="_blank" href={`${socials.location_link}`}> {socials.address} </a></p>
                         </div>

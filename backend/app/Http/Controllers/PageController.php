@@ -49,4 +49,8 @@ class PageController extends Controller implements HasMiddleware {
     public function deletePage($id = null){
         return $this->pageService->deletePage($id);
     }
+
+    public function sendContactMail(Request $request){
+        return $this->pageService->sendContactMail($request->name, $request->email, $request->message);
+    }
 }

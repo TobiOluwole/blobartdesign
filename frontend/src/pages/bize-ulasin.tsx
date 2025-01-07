@@ -3,38 +3,62 @@ import {useSelector} from "react-redux";
 import {RootState} from "@/store";
 import WebFrame from "@/components/web/frame";
 import Link from "next/link";
+import {useState} from "react";
+import axios from "@/utils/axiosInstance";
+import LangConv from "@/components/web/langConv";
 
 function ContactUs(){
     const socials = useSelector((state: RootState) => state.web.socials);
+    const language = useSelector((state: RootState) => state.web.lang);
+    const [messageSent, isMessageSent] = useState(false)
+    const [form, fillContactForm] = useState({name: '', email: '', message: ''})
+
+    function sendContactMail(e){
+        e.preventDefault();
+        axios.post('/page/contact/'+ name, form )
+            .then(() => {
+                isMessageSent(true)
+                fillContactForm({name: '', email: '', message: ''})
+            }).catch(() => {
+            isMessageSent(false)
+        })
+    }
+
     return (
         <>
             <Banner image={'/img/banner.jpg'} isTop={true} isImageForced={true}/>
 
             <div className={" text-[#777] sm:px-[13%] pl-3 pb-32"}>
-                <h1 className={"text-4xl mb-4 text-[#272727] tracking-headerWide sm:leading-8 md:leading-[65px] break-words capitalize"}>CONTACT US</h1>
+                <h1 className={"text-4xl mb-4 text-[#272727] tracking-headerWide sm:leading-8 md:leading-[65px] break-words uppercase"}>
+                    <LangConv en={'CONTACT US'} tr={'Bize Ulaşın'} />
+                </h1>
                 <div className={"flex w-full flex-wrap md:flex-row flex-col"}>
                     <div className={"basis-1/3 mb-12"}>
                         <div className="mb-6">
-                            <h6 className={"font-semibold text-[#58585a]"}>Address</h6>
+                            <h6 className={"font-semibold text-[#58585a]"}>
+                                <LangConv en={'Address'} tr={'Adres'} />
+                            </h6>
                         </div>
                         <p><a className={"text-[#777]"} target="_blank"
                               href={`${socials.location_link}`}> {socials.address} </a></p>
                     </div>
                     <div className={"basis-1/3 mb-12"}>
                         <div className="mb-6">
-                            <h6 className={"font-semibold text-[#58585a]"}>Contact Information</h6>
+                            <h6 className={"font-semibold text-[#58585a]"}>
+                                <LangConv en={'Contact Information'} tr={'İletişim Bilgileri'} />
+                            </h6>
                         </div>
                         <p className={"mb-6"}>
-                            <span className={"font-semibold text-[#58585a]"}>
-                                Phone :
+                            <span className={"font-semibold text-[#58585a] mr-1"}>
+                                <LangConv en={'Phone'} tr={'Telefon'} /> :
                             </span>
                             <a className={"text-[#777]"} target="_blank" href={`tel:${socials.phone}`}>
                                 {socials.phone}
                             </a>
                         </p>
                         <p>
-                            <span className={"font-semibold text-[#58585a]"}>
-                                Email :
+                            <span className={"font-semibold text-[#58585a] mr-1"}>
+                                <LangConv en={'Email'} tr={'E-posta'} /> :
                             </span>
                             <a className={"text-[#777]"} target="_blank" href={`mailto:${socials.email}`}>
                                 {socials.email}
@@ -81,23 +105,32 @@ function ContactUs(){
                             </div>
                         </div>
                     </div>
-                    <div className={"basis-1/3"}>
+                    <form className={"basis-1/3"} onSubmit={sendContactMail}>
                         <div className="mb-6">
-                            <h6 className={"font-semibold text-[#58585a]"}>Contact Form</h6>
+                            <h6 className={"font-semibold text-[#58585a]"}>
+                                <LangConv en={'Contact Form'} tr={'İletişim formu'} />
+                            </h6>
                         </div>
+                        {
+                            messageSent &&
+                            <div
+                                className={"text-[#777] border rounded-none border-solid border-[#58585a] relative mb-4 px-5 py-3"}>
+                                <LangConv en={'Your message was sent successfully.'} tr={'Mesajınız başarıyla gönderildi'} />
+                            </div>
+                        }
                         <div>
 
-                            <input required type={"text"} placeholder={"Name Surname"}
+                            <input value={form.name} onChange={(e)=>{fillContactForm({...form, name: e.target.value})}} required type={"text"} placeholder={language == 'en' ? "Name Surname" : "İsim Soyismi"}
                                    className={"max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}/>
-                            <input required type={"email"} placeholder={"E-mail"}
+                            <input value={form.email} onChange={(e)=>{fillContactForm({...form, email: e.target.value})}} required type={"email"} placeholder={language == 'en' ?  "E-mail" : "E-posta"}
                                    className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}/>
 
-                            <textarea required rows={5} placeholder={"Message"} className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}></textarea>
+                            <textarea value={form.message} onChange={(e)=>{fillContactForm({...form, message: e.target.value})}} required rows={5} placeholder={language == 'en' ? "Message" : "Mesaj"} className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}></textarea>
                         </div>
                         <div className={"grid justify-items-center w-full pt-5"}>
-                            <input type={"submit"} className={"font-light uppercase text-white relative text-base tracking-[3px] m-0 px-6 py-2 bg-[#58585a] mx-auto "} value={"SEND FORM"} />
+                            <input type={"submit"} className={"cursor-pointer font-light uppercase text-white relative text-base tracking-[3px] m-0 px-6 py-2 bg-[#58585a] mx-auto "} value={language == 'en' ?  "SEND FORM" : "FORMU GÖNDER"} />
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div className={"mt-16 p-5"}>

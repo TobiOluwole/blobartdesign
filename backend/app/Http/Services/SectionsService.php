@@ -272,7 +272,7 @@ class SectionsService {
 
         if($section && isset($section['content']['galleries'])){
             $images = array_find($section['content']['galleries'], function($item) use ($gallery_name){
-                if(isset($item['name_tr']) && isset($item['images']) && $item['name_tr'] == $gallery_name){
+                if(isset($item['name_en']) && isset($item['name_tr']) && isset($item['images']) && ($item['name_tr'] == $gallery_name || $item['name_en'] == $gallery_name)){
                     return true;
                 }
             });

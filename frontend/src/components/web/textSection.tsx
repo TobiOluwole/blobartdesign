@@ -1,5 +1,8 @@
+import {useAppSelector} from "@/store";
+
 export default function TextSection({texts}){
 
+    const language = useAppSelector((state) => state.web.lang);
     function processRichText(html) {
         const div = document.createElement('div');
 
@@ -31,15 +34,19 @@ export default function TextSection({texts}){
                             font-size:40px;
                             color: black;
                         }
+                        h2{
+                            font-size:40px;
+                            color: black;
+                        }
                     `}
                 </style>
 
             <div className=" flex justify-center items-center w-full mt-1 pb-5">
                 <div
-                    className={" w-[73%] leading-[30px] text-[16px] text-[#777777] tracking-[.5px] "}
+                    className={" w-[73%] leading-7 text-[16px] text-[#777777] tracking-[.5px] "}
                     // className={"text-black prose mx-16 sm:mx-6 lg:mx-52 w-full ring-2"}
 
-                    dangerouslySetInnerHTML={{__html: processRichText(texts.text_en)}}
+                    dangerouslySetInnerHTML={{__html: processRichText(language == 'en' ? texts.text_en : texts.text_tr)}}
                 />
 
             </div>

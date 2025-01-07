@@ -72,7 +72,7 @@ export default function Gallery({ gallery, updateSections, idx }) {
         updateSections((prevSections) => {
             const newSections = [...prevSections];
             if (newSections[idx]) {
-                newSections[idx].content.splice(groupIndex, 1);
+                newSections[idx].content.galleries.splice(groupIndex, 1);
             }
             return newSections;
         });

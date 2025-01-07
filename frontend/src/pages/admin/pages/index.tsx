@@ -104,7 +104,7 @@ function PagesView(){
                                     <td className="px-6 py-4">
                                         {page.is_home == 1 ? 'yes' : 'no'}
                                     </td>
-                                    <td className="px-6 py-4 flex space-x-3">
+                                    <td className="px-6 py-4 flex space-x-3 w-full">
                                         <Link href={`pages/${page.id}`}>
                                             <svg className="h-6 w-6 fill-current"
                                                  viewBox="0 0 512 512">
@@ -113,7 +113,7 @@ function PagesView(){
                                             </svg>
                                         </Link>
 
-                                        <button onClick={()=>{deletePage(page.id)}} >
+                                        <button className={"float-end"} onClick={()=>{deletePage(page.id)}} >
                                             <svg className="h-6 w-6 fill-current"
                                                  viewBox="0 0 17 17">
                                                 <path

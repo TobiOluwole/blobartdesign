@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
-import {getPages, getSocials} from "@/store/web/actions";
+import {getPages, getSocials, switchLanguage} from "@/store/web/actions";
 import {UnknownAction} from "redux";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "@/store";
 import NotFound from "next/dist/client/components/not-found-error";
 import Link from "next/link";
 import Footer from "@/components/web/footer";
+import LangConv from "@/components/web/langConv";
 
 export default function WebFrame(Component: any) {
 
@@ -53,14 +54,18 @@ export default function WebFrame(Component: any) {
                             {
                                 pages.map((page) => {
                                     return (
-                                            <Link href={`/${page.url}`} className="hidden lg:block px-3 flex-shrink mx-1.5 text-base hover:text-[#58585a] transition-all duration-350 tracking-navNormal">{page.display_name}</Link>
+                                            <Link href={`/${page.url}`} className="hidden lg:block px-3 flex-shrink mx-1.5 text-base hover:text-[#58585a] transition-all duration-350 tracking-navNormal">
+                                                <LangConv en={page.display_name} tr={page.display_name_tr} />
+                                            </Link>
                                         )
                                 })
                             }
                             <Link href="/bize-ulasin" className="hidden lg:block px-3 flex-shrink mx-1.5 text-base hover:text-[#58585a] transition-all duration-350 tracking-navNormal">
-                                Contact Us
+                                <LangConv en={'contact us'} tr={'bize ulaşın'} />
                             </Link>
-                            <Link href="/en" className="hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">EN</Link>
+                            <span onClick={()=>{dispatch(switchLanguage() as UnknownAction)}} className="cursor-pointer hidden lg:block px-3 mx-1.5 text-base tracking-navNormal">
+                                <LangConv en={'TR'} tr={'EN'} />
+                            </span>
                             <button>
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 512 512" className="h-4 fill-current px-3 hidden lg:block">
@@ -86,17 +91,30 @@ export default function WebFrame(Component: any) {
                                     pages.map((page) => {
                                         return (
                                             <li className="py-3">
-                                                <Link className={"text-black !filter-none"} href={`/${page.url}`}>{page.display_name}</Link>
+                                                <Link className={"text-black !filter-none"}
+                                                      href={`/${page.url}`}>
+                                                    <LangConv en={page.display_name} tr={page.display_name_tr}/>
+                                                </Link>
                                             </li>
                                         )
                                     })
                                 }
                                 <li className="py-3">
-                                    <Link className={"text-black  !filter-none"} href="/bize-ulasin">Contact Us</Link>
+                                    <Link className={"text-black  !filter-none"} href="/bize-ulasin">
+                                        <LangConv en={'contact us'} tr={'bize ulaşın'}/>
+                                    </Link>
+                                </li>
+                                <li className="py-3">
+                                    <span className={"text-black  !filter-none cursor-pointer"} onClick={() => {
+                                        dispatch(switchLanguage() as UnknownAction)
+                                    }}>
+                                        <LangConv en={'TR'} tr={'EN'}/>
+                                    </span>
                                 </li>
                             </ul>
                         </nav>
-                        <div className="min-h-screen bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:360px_100%] [background-position-x:-180px]">
+                        <div
+                            className="min-h-screen bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:360px_100%] [background-position-x:-180px]">
                             <Component {...props} />
                         </div>
                         <Footer />
