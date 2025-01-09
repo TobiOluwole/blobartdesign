@@ -14,7 +14,7 @@ export default function ForgotPasswordCard(token: string) {
     async function onSubmit(event: FormEvent<HTMLFormElement>){
         event.preventDefault();
 
-        dispatch(sendPasswordResetLink(email) as UnknownAction)
+        dispatch(sendPasswordResetLink(email) as unknown as UnknownAction)
 
     }
 

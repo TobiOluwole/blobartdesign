@@ -17,7 +17,7 @@ export default function protectedRouteCheck(Component: any) {
 
         useEffect(() => {
 
-            dispatch(authenticate() as UnknownAction)
+            dispatch(authenticate() as unknown as UnknownAction)
             setIsClient(true);
 
         }, []);

@@ -22,5 +22,5 @@ const webPersistConfig = {
 export default combineReducers({
     app: persistReducer(appPersistConfig, appReducer),
     auth: persistReducer(authPersistConfig, authReducer),
-    web: webReducer,
+    web: persistReducer(webPersistConfig, webReducer),
 });

@@ -4,7 +4,7 @@ import SideBar from "@/components/sideBar";
 function Dashboard(){
     return (
         <>
-                dashbord body
+                WELCOME TO BLOB ART DESIGN DASHBOARD
         </>
     )
 }

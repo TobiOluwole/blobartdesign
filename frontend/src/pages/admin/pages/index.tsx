@@ -16,7 +16,7 @@ function PagesView(){
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const openAddModal = () => setIsAddModalOpen(true);
     const closeAddModal = () => {
-        dispatch(getPages() as UnknownAction)
+        dispatch(getPages() as unknown as UnknownAction)
         setIsAddModalOpen(false)
     };
 
@@ -29,7 +29,7 @@ function PagesView(){
         axios.delete('/page/'+id)
             .then((data) => {
                 toast.success("deleted page ...", {id: getToast})
-                dispatch(getPages() as UnknownAction)
+                dispatch(getPages() as unknown as UnknownAction)
             })
             .catch((e) => {
                 toast.error("couldn't delete pages ...", {id: getToast})
@@ -43,7 +43,7 @@ function PagesView(){
 
     useEffect(() => {
 
-        dispatch(getPages() as UnknownAction)
+        dispatch(getPages() as unknown as UnknownAction)
 
     }, []);
 

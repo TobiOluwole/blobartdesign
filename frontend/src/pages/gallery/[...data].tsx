@@ -25,11 +25,11 @@ function GalleryView(){
         axios.get('/sections/gallery/'+ sectionId +'/' + galleryName )
             .then((data) => {
                 setImageList(data.data)
-                dispatch(setHttpStatus(200) as UnknownAction)
+                dispatch(setHttpStatus(200) as unknown as UnknownAction)
             }).catch((e) => {
-            dispatch(setHttpStatus(404) as UnknownAction)
+            dispatch(setHttpStatus(404) as unknown as UnknownAction)
         }).finally(() => {
-            dispatch(setLoadingState(false) as UnknownAction)
+            dispatch(setLoadingState(false) as unknown as UnknownAction)
         })
     }
 

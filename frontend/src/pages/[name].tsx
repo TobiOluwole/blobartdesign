@@ -17,36 +17,18 @@ function DynamicPage () {
     const router = useRouter()
     const name = router.query.name as string || ''
     const [pageInfo, setPageInfo] = useState({sections: [{sort_id: 0}]})
-    const [loadPercentage, setLoadPercentage] = useState(0);
 
     function getPageInfo(name){
         axios.get('/page/'+ name )
             .then((data) => {
                 setPageInfo(data.data)
-                dispatch(setHttpStatus(200) as UnknownAction)
+                dispatch(setHttpStatus(200) as unknown as UnknownAction)
             }).catch((e) => {
-                dispatch(setHttpStatus(404) as UnknownAction)
+                dispatch(setHttpStatus(404) as unknown as UnknownAction)
             }).finally(() => {
-                dispatch(setLoadingState(false) as UnknownAction)
+                dispatch(setLoadingState(false) as unknown as UnknownAction)
             })
     }
-
-    useEffect(() => {
-        const simulateLoading = () => {
-            let percentage = 0;
-            const interval = setInterval(() => {
-                if (percentage >= 100) {
-                    clearInterval(interval);
-                    console.log("Loading complete!");
-                } else {
-                    percentage += 5; // Increment progress
-                    setLoadPercentage(percentage);
-                }
-            }, 100); // Simulate loading in intervals
-        };
-
-        simulateLoading();
-    }, []);
 
     useEffect(() => {
         getPageInfo(name)
@@ -56,7 +38,7 @@ function DynamicPage () {
     return (
         <>
             {
-                pageInfo.sections.map((section, index) => {
+                pageInfo.sections.map((section: any, index) => {
                     return (
                         (section.type == 'hero' && <Hero key={index} idx={section.id} slides={section.content} includeSocials={section.sort_id == 0}/>) ||
                         (section.type == 'banner' && <Banner key={index} image={section.content?.image} isTop={section.sort_id == 0}/>) ||

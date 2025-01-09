@@ -1,12 +1,15 @@
 import React, {use, useEffect, useState} from "react";
-import Link from "next/link";
 import LangConv from "@/components/web/langConv";
 import {useAppSelector} from "@/store";
+import { useSearchParams } from 'next/navigation'
 
 export default function Gallery({ data, sectionId }) {
     const { title_en, title_tr, galleries } = data;
     const [activeGroup, setActiveGroup] = useState(null); // State to track the active group filter
     const [groups, setGroups] = useState([]); // State to track the active group filter
+
+    const searchParams = useSearchParams()
+    const search = searchParams.get('s')
 
     useEffect(() => {
         galleries.forEach((gallery) => {
@@ -43,10 +46,10 @@ export default function Gallery({ data, sectionId }) {
             </h1>
 
             {/* Group Filter Menu */}
-            <div className="flex justify-center space-x-4 mb-8">
+            <div className="flex justify-center space-x-1 mb-8">
                 <button
                     onClick={() => handleGroupClick(null)}
-                    className={`px-4 py-2 underline-offset-8 capitalize  ${
+                    className={`px-2 py-2 underline-offset-8 capitalize  ${
                         activeGroup === null
                             ? "underline text-black"
                             : "text-[#999]"
@@ -58,7 +61,7 @@ export default function Gallery({ data, sectionId }) {
                     <button
                         key={index}
                         onClick={() => handleGroupClick(language == 'en' ? group.group_name_en : group.group_name_tr)}
-                        className={`px-4 py-2 underline-offset-8 capitalize  ${
+                        className={`px-2 py-2 underline-offset-8 capitalize  ${
                             activeGroup === group.group_name_en  || activeGroup === group.group_name_tr
                                 ? "underline text-black"
                                 : "text-[#999]"
@@ -73,15 +76,22 @@ export default function Gallery({ data, sectionId }) {
             <div className="flex flex-wrap w-[75vw] m-auto justify-start items-center">
                 {galleries.map((gallery, index) => {
 
-                    const shouldShow =
+                    let shouldShow =
                         !activeGroup || gallery.group_name_en === activeGroup || gallery.group_name_tr === activeGroup;
 
+                    if(search){
+                        console.log(search)
+                        console.log(gallery.name_en, gallery.name_en.includes(search))
+                        console.log(gallery.name_tr, gallery.name_tr.includes(search))
+                        shouldShow = gallery.name_en.toLowerCase().includes(search) || gallery.name_tr.toLowerCase().includes(search)
+                    }
+
                     return (
-                        <Link
+                        <a
                             key={index}
                             href={'gallery/'+sectionId+'/'+ (language == 'en' ? gallery.name_en : gallery.name_tr)}
                             className={`transform transition-all ease-in-out duration-500 ${
-                                shouldShow ? "scale-100 opacity-100 w-1/2 px-3 mb-6" : "scale-0 opacity-0 w-0"
+                                shouldShow ? "scale-100 opacity-100 md:w-1/2 px-3 mb-6" : "scale-0 opacity-0 w-0"
                             }`}>
                             {gallery.images[0] && (
                                 <div className="relative group overflow-hidden">
@@ -101,7 +111,7 @@ export default function Gallery({ data, sectionId }) {
                                     </div>
                                 </div>
                             )}
-                        </Link>
+                        </a>
                     );
                 })}
             </div>

@@ -48,21 +48,21 @@ export default function SideBar(Component: any){
                                     d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>
                         </span>
                         <ul className="space-y-2 font-medium">
-                            <li>
-                                <Link href="/admin/dashboard"
-                                      className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${pathName == '/admin/dashboard' ? ' bg-gray-100 dark:bg-gray-700' : ' hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
-                                    <svg
-                                        className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                        viewBox="0 0 22 21">
-                                        <path
-                                            d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
-                                        <path
-                                            d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
-                                    </svg>
-                                    <span className="ms-3">Dashboard</span>
-                                </Link>
-                            </li>
+                            {/*<li>*/}
+                            {/*    <Link href="/admin/dashboard"*/}
+                            {/*          className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${pathName == '/admin/dashboard' ? ' bg-gray-100 dark:bg-gray-700' : ' hover:bg-gray-100 dark:hover:bg-gray-700'}`}>*/}
+                            {/*        <svg*/}
+                            {/*            className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"*/}
+                            {/*            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"*/}
+                            {/*            viewBox="0 0 22 21">*/}
+                            {/*            <path*/}
+                            {/*                d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>*/}
+                            {/*            <path*/}
+                            {/*                d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>*/}
+                            {/*        </svg>*/}
+                            {/*        <span className="ms-3">Dashboard</span>*/}
+                            {/*    </Link>*/}
+                            {/*</li>*/}
                             {/*<li>*/}
                             {/*    <Link href="/admin/header"*/}
                             {/*          className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white group ${pathName == '/admin/header' ? ' bg-gray-100 dark:bg-gray-700' : ' hover:bg-gray-100 dark:hover:bg-gray-700'}`}>*/}

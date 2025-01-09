@@ -105,11 +105,11 @@ export default function Sections(){
             })
     }
 
-    function updateSections(s){
+    function updateSections(s: any){
         setSections(s)
     }
 
-    function moveSectionUp(index) {
+    function moveSectionUp(index: any) {
         if (index > 0) {
             const newSections = [...sections];
             [newSections[index], newSections[index - 1]] = [newSections[index - 1], newSections[index]];
@@ -117,7 +117,7 @@ export default function Sections(){
         }
     }
 
-    function moveSectionDown(index) {
+    function moveSectionDown(index: any) {
         if (index < sections.length - 1) {
             const newSections = [...sections];
             [newSections[index], newSections[index + 1]] = [newSections[index + 1], newSections[index]];
@@ -125,7 +125,7 @@ export default function Sections(){
         }
     }
 
-    async function deleteSection(sectionId) {
+    async function deleteSection(sectionId: any) {
         const toastToDelete = toast.loading('deleting section...')
         try {
             // Send a request to delete the section

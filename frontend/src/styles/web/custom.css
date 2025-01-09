@@ -1,0 +1,8 @@
+/*body > *{*/
+/*    transition: all 1s ease-in;*/
+/*}*/
+
+/*body:has(.pace-active){*/
+/*    opacity: 0;*/
+/*    background-color: white;*/
+/*}*/

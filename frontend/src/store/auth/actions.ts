@@ -20,7 +20,7 @@ export const login = (formData: {email: string, password: string}) => async(disp
         .then((data) => {
             toast.success('welcome..', {id: submitToast});
             dispatch(authenticateCurrentUser(true))
-            window.location.href = '/admin/dashboard'
+            window.location.href = '/admin/pages'
         })
         .catch((e) => {
             dispatch(authenticateCurrentUser(false))

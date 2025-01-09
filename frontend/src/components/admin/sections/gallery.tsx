@@ -21,7 +21,7 @@ export default function Gallery({ gallery, updateSections, idx }) {
 
     const handleImageUpload = (groupIndex, files) => {
         const readerPromises = Array.from(files).map(
-            (file) =>
+            (file: any) =>
                 new Promise((resolve) => {
                     const reader = new FileReader();
                     reader.onload = (event) => resolve(event.target.result);

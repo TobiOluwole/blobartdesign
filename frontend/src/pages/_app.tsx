@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
         if (!router.pathname.startsWith("/admin/")) {
             // Dynamically import styles
             // import("@/styles/web/plugins.css");
-            // import("@/styles/web/style.css");
+            import("@/styles/web/custom.css");
 
             // Dynamically including scripts
         }

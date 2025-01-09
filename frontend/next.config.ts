@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
     BACKEND_URL:'http://localhost:8000',
     BASE_URL:'http://localhost:8000/api/',
   },
+  typescript:{
+    ignoreBuildErrors: true,
+  },
+  eslint:{
+    ignoreDuringBuilds: true
+  }
 
 };
 

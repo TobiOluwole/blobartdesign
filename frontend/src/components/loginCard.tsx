@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import {useDispatch} from "react-redux";
 import {login} from "@/store/auth/actions";
+import {UnknownAction} from "redux";
 
 export default function LoginCard() {
 
@@ -24,7 +25,7 @@ export default function LoginCard() {
     async function onSubmit(event: FormEvent<HTMLFormElement>){
         event.preventDefault();
 
-        dispatch(login(formData))
+        dispatch(login(formData) as unknown as UnknownAction)
     }
 
     return (

@@ -17,7 +17,7 @@ export default function ResetPasswordCard({token}: ResetPasswordCardProps) {
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        dispatch(resetPassword(token, {password, password_confirmation}) as UnknownAction)
+        dispatch(resetPassword(token, {password, password_confirmation}) as unknown as UnknownAction)
     }
 
     return (
