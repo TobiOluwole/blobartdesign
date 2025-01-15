@@ -6,16 +6,23 @@ import Link from "next/link";
 import {useState} from "react";
 import axios from "@/utils/axiosInstance";
 import LangConv from "@/components/web/langConv";
+import Head from "next/head";
+import ReCAPTCHA from 'react-google-recaptcha'
+import {
+    GoogleReCaptchaProvider,
+    GoogleReCaptcha
+} from 'react-google-recaptcha-v3';
 
 function ContactUs(){
     const socials = useSelector((state: RootState) => state.web.socials);
     const language = useSelector((state: RootState) => state.web.lang);
     const [messageSent, isMessageSent] = useState(false)
     const [form, fillContactForm] = useState({name: '', email: '', message: ''})
+    const [recaptchaScore, setRecaptchaScore] = useState(0)
 
     function sendContactMail(e){
         e.preventDefault();
-        axios.post('/page/contact/'+ name, form )
+        axios.post('/page/contact/', form )
             .then(() => {
                 isMessageSent(true)
                 fillContactForm({name: '', email: '', message: ''})
@@ -24,19 +31,40 @@ function ContactUs(){
         })
     }
 
+    function verifyRecaptcha(token){
+        axios.get('/recaptchaVerify/'+ token )
+            .then((data) => {
+                const score = data.data.score
+                if(typeof score === 'number'){
+                    setRecaptchaScore(score)
+                }
+            })
+    }
+
     return (
         <>
+            <Head>
+                <title>{`BLOB ART & DESIGN | ${language == 'en' ? 'CONTACT US' : 'Bİze Ulaşın'.toUpperCase()}`}</title>
+            </Head>
+
+            <GoogleReCaptchaProvider reCaptchaKey={'6LcN25ceAAAAAEXZmSe20i4yVNwHJs9eqHFSU4Bj'}>
+                <GoogleReCaptcha
+                    className="google-recaptcha-custom-class"
+                    onVerify={verifyRecaptcha}
+                />
+            </GoogleReCaptchaProvider>
+
             <Banner image={'/img/banner.jpg'} isTop={true} isImageForced={true}/>
 
-            <div className={" text-[#777] sm:px-[13%] pl-3 pb-32"}>
+            <div className={" text-[#777] pl-3 pb-32 max-w-[1140px] m-auto"}>
                 <h1 className={"text-4xl mb-4 text-[#272727] tracking-headerWide sm:leading-8 md:leading-[65px] break-words uppercase"}>
-                    <LangConv en={'CONTACT US'} tr={'Bize Ulaşın'} />
+                    <LangConv en={'CONTACT US'} tr={'Bİze Ulaşın'}/>
                 </h1>
                 <div className={"flex w-full flex-wrap md:flex-row flex-col"}>
                     <div className={"basis-1/3 mb-12"}>
                         <div className="mb-6">
                             <h6 className={"font-semibold text-[#58585a]"}>
-                                <LangConv en={'Address'} tr={'Adres'} />
+                                <LangConv en={'Address'} tr={'Adres'}/>
                             </h6>
                         </div>
                         <p><a className={"text-[#777]"} target="_blank"
@@ -45,12 +73,12 @@ function ContactUs(){
                     <div className={"basis-1/3 mb-12"}>
                         <div className="mb-6">
                             <h6 className={"font-semibold text-[#58585a]"}>
-                                <LangConv en={'Contact Information'} tr={'İletişim Bilgileri'} />
+                                <LangConv en={'Contact Information'} tr={'İletişim Bilgileri'}/>
                             </h6>
                         </div>
                         <p className={"mb-6"}>
                             <span className={"font-semibold text-[#58585a] mr-1"}>
-                                <LangConv en={'Phone'} tr={'Telefon'} /> :
+                                <LangConv en={'Phone'} tr={'Telefon'}/> :
                             </span>
                             <a className={"text-[#777]"} target="_blank" href={`tel:${socials.phone}`}>
                                 {socials.phone}
@@ -58,7 +86,7 @@ function ContactUs(){
                         </p>
                         <p>
                             <span className={"font-semibold text-[#58585a] mr-1"}>
-                                <LangConv en={'Email'} tr={'E-posta'} /> :
+                                <LangConv en={'Email'} tr={'E-posta'}/> :
                             </span>
                             <a className={"text-[#777]"} target="_blank" href={`mailto:${socials.email}`}>
                                 {socials.email}
@@ -105,36 +133,56 @@ function ContactUs(){
                             </div>
                         </div>
                     </div>
-                    <form className={"basis-1/3"} onSubmit={sendContactMail}>
-                        <div className="mb-6">
-                            <h6 className={"font-semibold text-[#58585a]"}>
-                                <LangConv en={'Contact Form'} tr={'İletişim formu'} />
-                            </h6>
-                        </div>
-                        {
-                            messageSent &&
+                    {
+                        recaptchaScore > 0.4999999999999999999 ?
+                            <form className={"basis-1/3"} onSubmit={sendContactMail}>
+                                <div className="mb-6">
+                                    <h6 className={"font-semibold text-[#58585a]"}>
+                                        <LangConv en={'Contact Form'} tr={'İletişim formu'}/>
+                                    </h6>
+                                </div>
+                                {
+                                    messageSent &&
+                                    <div
+                                        className={"text-[#777] border rounded-none border-solid border-[#58585a] relative mb-4 px-5 py-3"}>
+                                        <LangConv en={'Your message was sent successfully.'}
+                                                  tr={'Mesajınız başarıyla gönderildi'}/>
+                                    </div>
+                                }
+                                <div>
+
+                                    <input value={form.name} onChange={(e) => {
+                                        fillContactForm({...form, name: e.target.value})
+                                    }} required type={"text"}
+                                           placeholder={language == 'en' ? "Name Surname" : "İsim Soyismi"}
+                                           className={"max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}/>
+                                    <input value={form.email} onChange={(e) => {
+                                        fillContactForm({...form, email: e.target.value})
+                                    }} required type={"email"} placeholder={language == 'en' ? "E-mail" : "E-posta"}
+                                           className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}/>
+
+                                    <textarea value={form.message} onChange={(e) => {
+                                        fillContactForm({...form, message: e.target.value})
+                                    }} required rows={5} placeholder={language == 'en' ? "Message" : "Mesaj"}
+                                              className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}></textarea>
+                                </div>
+                                <div className={"grid justify-items-center w-full pt-5"}>
+                                    <input type={"submit"}
+                                           className={"cursor-pointer font-light uppercase text-white relative text-base tracking-[3px] m-0 px-6 py-2 bg-[#58585a] mx-auto "}
+                                           value={language == 'en' ? "SEND FORM" : "FORMU GÖNDER"}/>
+                                </div>
+                            </form> :
                             <div
-                                className={"text-[#777] border rounded-none border-solid border-[#58585a] relative mb-4 px-5 py-3"}>
-                                <LangConv en={'Your message was sent successfully.'} tr={'Mesajınız başarıyla gönderildi'} />
+                                className={"basis-1/3 text-[#777] border rounded-none border-solid border-[#58585a] relative mb-4 px-5 py-3 h-fit"}>
+                                <LangConv en={'We suspect you may be a robot. Please refresh this page.'}
+                                          tr={'Robot olabileceğinizden şüpheleniyoruz. Lütfen bu sayfayı yenileyin.'}/>
                             </div>
-                        }
-                        <div>
-
-                            <input value={form.name} onChange={(e)=>{fillContactForm({...form, name: e.target.value})}} required type={"text"} placeholder={language == 'en' ? "Name Surname" : "İsim Soyismi"}
-                                   className={"max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}/>
-                            <input value={form.email} onChange={(e)=>{fillContactForm({...form, email: e.target.value})}} required type={"email"} placeholder={language == 'en' ?  "E-mail" : "E-posta"}
-                                   className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}/>
-
-                            <textarea value={form.message} onChange={(e)=>{fillContactForm({...form, message: e.target.value})}} required rows={5} placeholder={language == 'en' ? "Message" : "Mesaj"} className={"mt-5 max-w-full h-auto bg-transparent shadow-none block w-full leading-[1.5em] text-base font-normal text-[#777] bg-none mb-2.5 px-0 py-2.5 border-b-[#f4f4f4] border-[0_0_1px] border-solid border-b"}></textarea>
-                        </div>
-                        <div className={"grid justify-items-center w-full pt-5"}>
-                            <input type={"submit"} className={"cursor-pointer font-light uppercase text-white relative text-base tracking-[3px] m-0 px-6 py-2 bg-[#58585a] mx-auto "} value={language == 'en' ?  "SEND FORM" : "FORMU GÖNDER"} />
-                        </div>
-                    </form>
+                    }
                 </div>
 
                 <div className={"mt-16 p-5"}>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.4720016697343!2d33.3614209815597!3d35.19471028629777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14de1723ef2422a1%3A0x1863da52c96c2b36!2zTWXFn2UgU2ssIEvDvMOnw7xrIEtheW1ha2zEsSA5OTAxMA!5e0!3m2!1sen!2s!4v1735912741359!5m2!1sen!2s" width="100%" height="500" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.4720016697343!2d33.3614209815597!3d35.19471028629777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14de1723ef2422a1%3A0x1863da52c96c2b36!2zTWXFn2UgU2ssIEvDvMOnw7xrIEtheW1ha2zEsSA5OTAxMA!5e0!3m2!1sen!2s!4v1735912741359!5m2!1sen!2s" width="100%" height="500" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </>

@@ -9,6 +9,7 @@ import Link from "next/link";
 import AddPages from "@/components/admin/pages/addPages";
 import {toast} from "react-hot-toast";
 import axios from "@/utils/axiosInstance";
+import Head from "next/head";
 
 function PagesView(){
 

@@ -11,6 +11,8 @@ import Banner from "@/components/web/banner";
 import TextSection from "@/components/web/textSection";
 import Gallery from "@/components/web/gallery";
 import Team from "@/components/web/team";
+import Head from "next/head";
+import {useAppSelector} from "@/store";
 
 function DynamicPage () {
     const dispatch = useDispatch();
@@ -18,9 +20,12 @@ function DynamicPage () {
     const name = router.query.name as string || ''
     const [pageInfo, setPageInfo] = useState({sections: [{sort_id: 0}]})
 
+    const language = useAppSelector((state) => state.web.lang);
+
     function getPageInfo(name){
         axios.get('/page/'+ name )
             .then((data) => {
+                console.log(data.data)
                 setPageInfo(data.data)
                 dispatch(setHttpStatus(200) as unknown as UnknownAction)
             }).catch((e) => {
@@ -37,6 +42,9 @@ function DynamicPage () {
 
     return (
         <>
+            <Head>
+                <title>{`BLOB ART & DESIGN | ${language == 'en' ? pageInfo?.display_name?.toUpperCase() : pageInfo?.display_name_tr?.toUpperCase()}`}</title>
+            </Head>
             {
                 pageInfo.sections.map((section: any, index) => {
                     return (

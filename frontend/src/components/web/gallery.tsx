@@ -39,9 +39,9 @@ export default function Gallery({ data, sectionId }) {
     };
 
     return (
-        <div className="">
+        <div className="max-w-[1140px] m-auto">
             {/* Page Titles */}
-            <h1 className="text-4xl text-center mb-4 text-[#272727] tracking-headerWide sm:leading-8 md:leading-[65px] break-words uppercase">
+            <h1 className="text-4xl text-center mb-4 text-[#272727] tracking-[10px] sm:leading-8 md:leading-[65px] break-words uppercase">
                 <LangConv en={title_en} tr={title_tr} />
             </h1>
 
@@ -73,7 +73,7 @@ export default function Gallery({ data, sectionId }) {
             </div>
 
             {/* Image Grid */}
-            <div className="flex flex-wrap w-[75vw] m-auto justify-start items-center">
+            <div className="flex flex-wrap w-full m-auto justify-start items-center">
                 {galleries.map((gallery, index) => {
 
                     let shouldShow =
@@ -99,7 +99,7 @@ export default function Gallery({ data, sectionId }) {
                                     <img
                                         src={process.env.BACKEND_URL+gallery.images[0]}
                                         alt={gallery.name_en}
-                                        className="min-w-full h-[303.75px] object-cover transform group-hover:scale-105 transition-all duration-500 group-hover:brightness-90"
+                                        className="w-full h-[303.75px] object-cover transform group-hover:scale-105 transition-all duration-500 group-hover:brightness-90"
                                     />
                                     {/* Hover Text */}
                                     <div className="absolute bottom-0 left-0 w-5/6 bg-white translate-y-full group-hover:translate-y-0 transition-all group-hover:delay-200 duration-500">

@@ -5,6 +5,7 @@ import PageLoader from "@/utils/loadingPage";
 import {useAppSelector, useAppDispatch} from "@/store";
 import {authenticate} from "@/store/auth/actions";
 import {UnknownAction} from "redux";
+import Head from "next/head";
 
 
 export default function protectedRouteCheck(Component: any) {
@@ -26,6 +27,18 @@ export default function protectedRouteCheck(Component: any) {
         if (!isClient) return null;
 
 
-        return loading == true ? <PageLoader /> : <Component {...props} />;
+        return loading == true ?
+            <>
+                <Head>
+                    <title>{`BLOB ART & DESIGN ADMIN`}</title>
+                </Head>
+                <PageLoader />
+            </> :
+            <>
+                <Head>
+                    <title>{`BLOB ART & DESIGN ADMIN`}</title>
+                </Head>
+                <Component {...props} />
+            </>;
     };
 }

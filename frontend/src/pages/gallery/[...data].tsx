@@ -13,6 +13,8 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Head from "next/head";
+import {useAppSelector} from "@/store";
 
 function GalleryView(){
     const dispatch = useDispatch();
@@ -20,6 +22,8 @@ function GalleryView(){
     const sectionId = router.query.data?.[0]
     const galleryName = router.query.data?.[1]
     const [imageList, setImageList] = useState([])
+
+    const language = useAppSelector((state) => state.web.lang);
 
     function getImageList(){
         axios.get('/sections/gallery/'+ sectionId +'/' + galleryName )
@@ -42,6 +46,9 @@ function GalleryView(){
 
     return (
         <>
+            <Head>
+                <title>{`BLOB ART & DESIGN | ${language == 'en' ? 'CONTACT US' : 'Bİze Ulaşın'.toUpperCase()}`}</title>
+            </Head>
             <Banner image={'/img/banner.jpg'} isTop={true} isImageForced={true}/>
             {
                 imageList.length > 0 &&
@@ -57,7 +64,7 @@ function GalleryView(){
                     }}
                     observer={true}
                     observeParents={true}
-                    className="mySwiper w-[72%] max-w-[1110px] m-auto -mt-36 z-40 relative"
+                    className="mySwiper w-[72%] max-w-[1140px] m-auto -mt-36 z-40 relative"
                 >
                     <>
                         {

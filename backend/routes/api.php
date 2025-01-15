@@ -11,6 +11,8 @@ Route::group(["prefix" => "/api"], function () {
         return 'Blob Art Design Api V1';
     });
 
+    Route::get('/recaptchaVerify/{token}', [SectionsController::class, 'verifyGoogleCaptchaToken']);
+
     Route::group(["prefix" => "/auth"], function () {
 
         Route::get('/',[UserController::class, 'myToken']);

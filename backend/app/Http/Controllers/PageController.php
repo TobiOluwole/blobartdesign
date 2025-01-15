@@ -18,6 +18,7 @@ class PageController extends Controller implements HasMiddleware {
             new Middleware(JWTMiddleware::class, except: [
                 'allPages',
                 'getPage',
+                'sendContactMail'
             ])
         ];
     }

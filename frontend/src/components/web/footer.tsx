@@ -6,9 +6,9 @@ import LangConv from "@/components/web/langConv";
 export default function Footer(){
     const socials = useSelector((state: RootState) => state.web.socials);
     return(
-        <footer className="main-footer text-[#58585a] sm:px-[13%] pl-3 pt-10 bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:360px_180px] [background-position-x:-180px]">
-            <div className="">
-                <div className="grid md:grid-cols-3 grid-cols-1 mt-6">
+        <footer className="main-footer text-[#58585a] sm:px-[15%] pl-3 pt-10 bg-transparent border-t border-[#f4f4f4] ">
+            <div className="max-w-[1140px] m-auto mb-4">
+                <div className="grid md:grid-cols-3 grid-cols-1 mt-6 space-x-5 pl-5">
                     <div className="mb-8">
                         <div className="">
                             <div className="pb-1.5">
@@ -41,12 +41,13 @@ export default function Footer(){
                     </div>
                 </div>
             </div>
-            <div className="mt-8">
+            <div className={"color-[#f4f4f4] w-full absolute left-0 h-px border-t border-[#f4f4f4]"}> </div>
+            <div className="mt-4 max-w-[1140px] m-auto">
                 <div className="">
-                    <div className="grid md:grid-cols-3 grid-cols-1">
+                    <div className="grid md:grid-cols-3 grid-cols-1 space-x-5 pl-5">
                         <div className="pt-8">
                             <div className="text-sm">
-                                <p className="mt-3">Copyright @ 2025 BLOB</p>
+                                <p className="mt-3">Copyright @ {new Date().getFullYear()} BLOB</p>
                             </div>
                         </div>
                         <div className="py-8 flex items-center w-full">

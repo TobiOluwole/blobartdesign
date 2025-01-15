@@ -3,7 +3,7 @@ import LangConv from "@/components/web/langConv";
 export default function Team({key, data}){
     return (
         <>
-            <div className={"max-w-[75%]  m-auto pb-32"}>
+            <div className={"m-auto pb-32 max-w-[1140px]"}>
                 <h1 className={"text-[40px] font-normal text-[#272727] uppercase relative tracking-[10px] mb-[30px]"}>
                     <LangConv en={data.title_en} tr={data.title_tr}/>
                 </h1>

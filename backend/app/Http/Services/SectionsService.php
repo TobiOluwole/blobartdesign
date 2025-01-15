@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Sections;
 use App\Models\Socials;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class SectionsService {
@@ -281,5 +282,14 @@ class SectionsService {
         }
 
         return response()->json(null, 404);
+    }
+
+    public function verifyGoogleCaptchaToken($token){
+        $response = Http::asForm()->withoutVerifying()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('RECAPTCHA_SECRET'),
+            'response' => $token,
+        ]);
+
+        return response()->json($response->json());
     }
 }

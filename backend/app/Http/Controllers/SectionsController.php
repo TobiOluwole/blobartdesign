@@ -21,7 +21,8 @@ class SectionsController extends Controller implements HasMiddleware {
             new Middleware(JWTMiddleware::class, except: [
                 'getSocials',
                 'getPageSections',
-                'getGalleryImages'
+                'getGalleryImages',
+                'verifyGoogleCaptchaToken'
             ])
         ];
     }
@@ -57,5 +58,9 @@ class SectionsController extends Controller implements HasMiddleware {
 
     public function getGalleryImages($section_id, $gallery_name){
         return $this->sectionsService->getGalleryImages($section_id, $gallery_name);
+    }
+
+    public function verifyGoogleCaptchaToken($token){
+        return $this->sectionsService->verifyGoogleCaptchaToken($token);
     }
 }
