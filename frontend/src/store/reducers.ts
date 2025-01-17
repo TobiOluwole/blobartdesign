@@ -17,6 +17,7 @@ const appPersistConfig = {
 const webPersistConfig = {
     key: "web",
     storage: storage,
+    blacklist: ['currentHttpStatus']
 };
 
 export default combineReducers({

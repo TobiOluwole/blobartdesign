@@ -119,7 +119,7 @@ export default function WebFrame(Component: any) {
         if (!isClient) return null;
         return (
             <>
-                {currentHttpStatus === 404 && <NotFound/>}
+                {currentHttpStatus === 404 && <div className={"bg-black"}><NotFound/></div>}
                 {
                     currentHttpStatus === 200 &&
                     <>

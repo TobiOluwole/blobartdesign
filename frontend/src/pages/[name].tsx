@@ -15,6 +15,7 @@ import Head from "next/head";
 import {useAppSelector} from "@/store";
 
 function DynamicPage () {
+    console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
     const dispatch = useDispatch();
     const router = useRouter()
     const name = router.query.name as string || ''
@@ -25,7 +26,6 @@ function DynamicPage () {
     function getPageInfo(name){
         axios.get('/page/'+ name )
             .then((data) => {
-                console.log(data.data)
                 setPageInfo(data.data)
                 dispatch(setHttpStatus(200) as unknown as UnknownAction)
             }).catch((e) => {
@@ -38,7 +38,6 @@ function DynamicPage () {
     useEffect(() => {
         getPageInfo(name)
     }, [name]);
-
 
     return (
         <>

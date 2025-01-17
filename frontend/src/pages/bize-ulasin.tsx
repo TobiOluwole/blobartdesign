@@ -7,7 +7,6 @@ import {useState} from "react";
 import axios from "@/utils/axiosInstance";
 import LangConv from "@/components/web/langConv";
 import Head from "next/head";
-import ReCAPTCHA from 'react-google-recaptcha'
 import {
     GoogleReCaptchaProvider,
     GoogleReCaptcha

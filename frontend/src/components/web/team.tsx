@@ -21,7 +21,16 @@ export default function Team({key, data}){
                                             }}
                                             className={"w-[350px] h-[466px]"}></div>
                                         <div className={"relative overflow-hidden px-5 py-[30px] grid justify-items-center"}>
-                                            <h6 className={"text-[17px] uppercase font-light tracking-[3px] text-[#272727] mb-[5px] text-center"}>{member.name}</h6>
+                                            <h6 className={"text-[17px] uppercase font-light tracking-[3px] text-[#272727] mb-[5px] text-center"}>
+                                                {
+                                                    member.name.split("<nl>").map((line, index) => (
+                                                        <span key={index}>
+                                                            {line}
+                                                            <br />
+                                                        </span>
+                                                    ))
+                                                }
+                                            </h6>
                                             <p className={"text-base font-normal leading-[1.75em] text-[#777] mb-5 text-center"}>
                                                 <LangConv en={member.position_en} tr={member.position_tr}/>
                                             </p>

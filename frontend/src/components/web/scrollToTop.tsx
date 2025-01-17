@@ -30,7 +30,7 @@ function ScrollToTopButton() {
     return (
 
                 <div
-                    className={`fixed bottom-5 right-5 w-16 h-16 flex items-center justify-center transition-all ease-in-out duration-500 cursor-pointer ${scrollPercent < 8 ? 'translate-y-56' : ''}`}
+                    className={`fixed bottom-5 right-5 w-16 h-16 flex items-center justify-center transition-all ease-in-out duration-500 cursor-pointer z-50 ${scrollPercent < 8 ? 'translate-y-56' : ''}`}
                     onClick={scrollToTop}
                 >
                     {/* SVG for Circular Progress */}
